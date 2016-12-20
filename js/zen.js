@@ -5,7 +5,7 @@ zen.directive('datepicker', function() {
    return function(scope, element, attrs) {
        element.datepicker({
            inline: true,
-           dateFormat: 'dd.mm.yy',
+           dateFormat: 'dd.mm.yyyy',
            onSelect: function(dateText) {
                var modelPath = $(this).attr('ng-model');
                putObject(modelPath, scope, dateText);
@@ -16,8 +16,7 @@ zen.directive('datepicker', function() {
 });
 
 zen.controller('zenCtrl', function($scope, $http) {
-    $scope.from = '';
-    $scope.to = '';
+
 
 
 function findFrom(fromData) {
@@ -53,38 +52,40 @@ function findTo(fromData) {
 }
 
 
-$scope.$watch('from', function(from) {
+$scope.$watch('search.from', function(from) {
 	if (from.length > 2) {
 		findFrom(from);
 	}
  }, true);
 
-$scope.$watch('to', function(to) {
+$scope.$watch('search.to', function(to) {
 	if (to.length > 2) {
 		findTo(to);
 	}
  }, true);
 
 
-$scope.findFlights = function() {
-  	// initialisation stuff here
+$scope.findFlights = function(data) {
+  		
+
+  		$query = data;
+
+		$dateFrom = data.dateFrom; 
+		$dateTo = data.dateTo;
+
+
+  		console.log($query);
+
   		$http({
 			method: 'GET',
-			url: 'https://api.skypicker.com/flights?v=2&locale=en&flyFrom=prague_cz&to=paris_fr&dateFrom=22%2F12%2F2016&dateTo=30%2F12%2F2016',
+			url: 'https://api.skypicker.com/flights?v=2&locale=en&flyFrom='+ $query.from +'&to='+ $query.to +'&dateFrom='+ $dateFrom +'&dateTo=' + $dateTo,
 			timeout: 3000
 		}).then(function successCallback(response) {
 			console.log(response.data.data);
 			$scope.flights = response.data.data.slice(0, 20);
-;
-
 		}, function errorCallback(response) {
 			$scope.from = '';
 		});
 }
-
-
-    	
-
-
 
 });

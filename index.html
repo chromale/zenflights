@@ -9,6 +9,7 @@
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/main.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet">
 
 <!-- Javascript powered by Angular -->
 <script
@@ -28,58 +29,74 @@
 <div class="zenform-holder">
 	<div class="container">
 		<h1 class="main-title">Zen Flight</h1>
-		<form class="zenform" ng-submit="findFlights()">
+		<form class="zenform" ng-submit="findFlights(search)">
 
 		<div class="row">
 			<div class="col-md-3">
 
 				<div class="form-group">
 					<label for="from">From:</label> 
-					<input type="text" list="fromPlaces" ng-model="from" id="from" ng-change="expression">
+					<input type="text" list="fromPlaces" ng-model="search.from" id="from">
 					<datalist id="fromPlaces">
-				    	<option ng-repeat="n in completeFrom track by $index" value="{{n.value}}" />
+				    	<option ng-repeat="n in completeFrom track by $index" value="{{n.id}}" />
 					</datalist>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="to">To:</label> 
-					<input type="text" list="toPlaces" ng-model="to" id="to">
+					<input type="text" list="toPlaces" ng-model="search.to" id="to">
 					<datalist id="toPlaces">
-				    	<option ng-repeat="n in completeTo track by $index" value="{{n.value}}" />
+				    	<option ng-repeat="n in completeTo track by $index" value="{{n.id}}" />
 					</datalist>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="date">Flight interval from:</label> 
-					<input type="text" id="datepickerfrom" datepicker ng-model="dateFrom" />
+					<input type="text" id="datepickerfrom" datepicker ng-model="search.dateFrom" />
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="date">Flight interval to:</label> 
-					<input type="text" id="datepickerto" datepicker ng-model="dateTo" />
+					<input type="text" id="datepickerto" datepicker ng-model="search.dateTo" />
 				</div>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<input type="submit" id="submit" value="Submit" />
+				<button class="searchbutton" type="submit" id="submit">
+					<i class="fa fa-search" aria-hidden="true"></i> Search flights
+				</button>
 			</div>
 		</div>
 		
 		</form>
 	</div>
 </div>
-{{ $flights }}
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<div class="flight-result-holder">
 				<div class="single-flight-result" ng-repeat="flight in flights track by $index">
-					{{flight.cityFrom}} >{{flight.fly_duration}} > {{flight.cityTo}} > {{flight.price}} EUR
+					<span class="result-time">
+						<i class="fa fa-clock-o" aria-hidden="true"></i>
+						{{flight.aTime * 1000 | date:'medium' : 'UTC'}}
+					</span>
+					<span class="result-destinations">
+						{{flight.cityFrom}} 
+							<i class="fa fa-angle-right" aria-hidden="true"></i>
+ 						{{flight.cityTo}}
+					</span>
+					<span class="result-duration">
+						<i class="fa fa-plane" aria-hidden="true"></i> {{flight.fly_duration}}
+					</span>
+					<span class="result-price">
+						{{flight.price}} EUR
+					</span>
 				</div>
 			</div>
 		</div>
@@ -88,8 +105,8 @@
 
 
 <script>
-	$('#datepickerfrom').datepicker();
-	$('#datepickerto').datepicker();
+	$('#datepickerfrom').datepicker({ dateFormat: 'dd/mm/yy' });
+	$('#datepickerto').datepicker({ dateFormat: 'dd/mm/yy' });
 </script>
 </body>
 </html>
