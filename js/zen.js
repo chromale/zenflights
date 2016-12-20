@@ -67,7 +67,6 @@ $scope.$watch('to', function(to) {
 
 
 $scope.findFlights = function() {
-	console.log("Fuck");
   	// initialisation stuff here
   		$http({
 			method: 'GET',
@@ -75,7 +74,8 @@ $scope.findFlights = function() {
 			timeout: 3000
 		}).then(function successCallback(response) {
 			console.log(response.data.data);
-			$scope.flights = response.data.data;
+			$scope.flights = response.data.data.slice(0, 20);
+;
 
 		}, function errorCallback(response) {
 			$scope.from = '';
