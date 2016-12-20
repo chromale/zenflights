@@ -10,34 +10,77 @@
 <link href="css/main.css" rel="stylesheet">
 
 <!-- Javascript powered by Angular -->
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+  <script
+  src="http://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+
 <script src="node_modules/angular/angular.js"></script>
+<script src="js/angucomplete.js"></script>
 <script src="js/zen.js"></script>
 
 <body ng-app="zen">
 
-<div class="container">
+<div class="container" ng-controller="zenCtrl">
 	<div class="row">
 		<div class="col-md-12">
 			<form class="zenform">
 			<div class="form-group">
-				<label for="exampleInputEmail1">From:</label> 
-				<input type="text" ng-model="name" id="exampleInputEmail1">
+				<label for="from">From:</label> 
+				<input type="text" list="fromPlaces" ng-model="from" id="from" ng-change="expression">
+				<datalist id="fromPlaces">
+			    	<option ng-repeat="n in completeFrom track by $index" value="{{n.value}}">
+				</datalist>
 			</div>
 
 			<div class="form-group">
-				<label for="exampleInputEmail1">To:</label> 
-				<input type="text" ng-model="name" id="exampleInputEmail1">
+				<label for="to">To:</label> 
+				<input type="text" list="toPlaces" ng-model="to" id="to">
+				<datalist id="toPlaces">
+			    	<option ng-repeat="n in completeTo track by $index" value="{{n.value}}">
+				</datalist>
 			</div>
+			
 
 			<div class="form-group">
-				<label for="exampleInputEmail1">Date:</label> 
-				<input type="text" ng-model="name" id="exampleInputEmail1">
+				<label for="date">Date:</label> 
+				<input type="text" id="datepicker" datepicker ng-model="myobj" />
 			</div>
 
+			
+			<button type="submit">Search</button>
 			</form>
+
+			<angucomplete id="ex1"
+              placeholder="Search countries"
+              pause="100"
+              selectedobject="selectedCountry"
+              localdata="countries"
+              searchfields="name"
+              titlefield="name"
+              minlength="1"
+              inputclass="form-control form-control-small"/>
+              
+		</div>
+	</div>
+{{ $entry }}
+	<div class="row">
+		<div class="col-md-12">
+			<div class="single-flight-result">
+				<div class="single-flight-result">
+				From - To - Date - Time - Price / EUR
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
+<script>
+	$('#datepicker').datepicker();
+</script>
 </body>
 </html>

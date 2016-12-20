@@ -3,7 +3,8 @@ body {
 
 .zenform {
   margin: 0 auto;
-  width: 100%; }
+  width: 100%;
+  text-align: center; }
 
 nav ul {
   margin: 0;
@@ -17,3 +18,7 @@ nav a {
   display: block;
   padding: 6px 12px;
   text-decoration: none; }
+
+.single-flight-result {
+  background-color: #fff;
+  margin: 10px 0; }
