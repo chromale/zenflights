@@ -20,7 +20,6 @@
   crossorigin="anonymous"></script>
 
 <script src="node_modules/angular/angular.js"></script>
-<script src="js/angucomplete.js"></script>
 <script src="js/zen.js"></script>
 
 <body ng-app="zen">
@@ -28,7 +27,7 @@
 <div class="container" ng-controller="zenCtrl">
 	<div class="row">
 		<div class="col-md-12">
-			<form class="zenform">
+			<form class="zenform" ng-submit="findFlights()">
 			<div class="form-group">
 				<label for="from">From:</label> 
 				<input type="text" list="fromPlaces" ng-model="from" id="from" ng-change="expression">
@@ -47,32 +46,27 @@
 			
 
 			<div class="form-group">
-				<label for="date">Date:</label> 
-				<input type="text" id="datepicker" datepicker ng-model="myobj" />
+				<label for="date">Date from:</label> 
+				<input type="text" id="datepickerfrom" datepicker ng-model="dateFrom" />
 			</div>
 
-			
-			<button type="submit">Search</button>
-			</form>
+			<div class="form-group">
+				<label for="date">Date to:</label> 
+				<input type="text" id="datepickerto" datepicker ng-model="dateTo" />
+			</div>
 
-			<angucomplete id="ex1"
-              placeholder="Search countries"
-              pause="100"
-              selectedobject="selectedCountry"
-              localdata="countries"
-              searchfields="name"
-              titlefield="name"
-              minlength="1"
-              inputclass="form-control form-control-small"/>
+<input type="submit" id="submit" value="Submit" />
+			
+			</form>
               
 		</div>
 	</div>
-{{ $entry }}
+
 	<div class="row">
 		<div class="col-md-12">
 			<div class="single-flight-result">
-				<div class="single-flight-result">
-				From - To - Date - Time - Price / EUR
+				<div class="single-flight-result" ng-repeat="flight in flights track by $index">
+					{{flight.cityFrom}} >{{flight.fly_duration}} > {{flight.cityTo}} > {{flight.price}} EUR
 				</div>
 			</div>
 		</div>
@@ -80,7 +74,8 @@
 </div>
 
 <script>
-	$('#datepicker').datepicker();
+	$('#datepickerfrom').datepicker();
+	$('#datepickerto').datepicker();
 </script>
 </body>
 </html>

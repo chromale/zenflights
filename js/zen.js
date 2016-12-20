@@ -1,4 +1,4 @@
-var zen = angular.module('zen', ["angucomplete"]);
+var zen = angular.module('zen', []);
 
 
 zen.directive('datepicker', function() {
@@ -66,7 +66,21 @@ $scope.$watch('to', function(to) {
  }, true);
 
 
-// elsewhere in code
+$scope.findFlights = function() {
+	console.log("Fuck");
+  	// initialisation stuff here
+  		$http({
+			method: 'GET',
+			url: 'https://api.skypicker.com/flights?v=2&locale=en&flyFrom=prague_cz&to=paris_fr&dateFrom=22%2F12%2F2016&dateTo=30%2F12%2F2016',
+			timeout: 3000
+		}).then(function successCallback(response) {
+			console.log(response.data.data);
+			$scope.flights = response.data.data;
+
+		}, function errorCallback(response) {
+			$scope.from = '';
+		});
+}
 
 
     	
