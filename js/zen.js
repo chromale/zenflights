@@ -1,6 +1,5 @@
 var zen = angular.module('zen', []);
 
-
 zen.directive('datepicker', function() {
    return function(scope, element, attrs) {
        element.datepicker({
@@ -17,12 +16,9 @@ zen.directive('datepicker', function() {
 
 zen.controller('zenCtrl', function($scope, $http) {
 
-
-
-function findFrom(fromData) {
-	$from = fromData;
-  	// initialisation stuff here
-  		$http({
+	function findFrom(fromData) {
+		$from = fromData;
+		$http({
 			method: 'GET',
 			url: 'https://api.skypicker.com/places?term=' + $from + '&v=2&locale=en',
 			timeout: 3000
@@ -33,12 +29,11 @@ function findFrom(fromData) {
 		}, function errorCallback(response) {
 			$scope.from = '';
 		});
-}
+	}
 
-function findTo(fromData) {
-	$from = fromData;
-  	// initialisation stuff here
-  		$http({
+	function findTo(fromData) {
+		$from = fromData;
+		$http({
 			method: 'GET',
 			url: 'https://api.skypicker.com/places?term=' + $from + '&v=2&locale=en',
 			timeout: 3000
@@ -49,43 +44,34 @@ function findTo(fromData) {
 		}, function errorCallback(response) {
 			$scope.to = '';
 		});
-}
-
-
-$scope.$watch('search.from', function(from) {
-	if (from.length > 2) {
-		findFrom(from);
 	}
- }, true);
 
-$scope.$watch('search.to', function(to) {
-	if (to.length > 2) {
-		findTo(to);
+// Watching place input fields and fetch it with data
+	$scope.$watch('search.from', function(from) {
+		if (from.length > 2) {
+			findFrom(from);
+		}
+	 }, true);
+
+	$scope.$watch('search.to', function(to) {
+		if (to.length > 2) {
+			findTo(to);
+		}
+	 }, true);
+
+// Search flights by submit search form
+	$scope.findFlights = function(data) {
+	  		$query = data;
+			$dateFrom = data.dateFrom; 
+			$dateTo = data.dateTo;
+	  		$http({
+				method: 'GET',
+				url: 'https://api.skypicker.com/flights?v=2&locale=en&flyFrom='+ $query.from +'&to='+ $query.to +'&dateFrom='+ $dateFrom +'&dateTo=' + $dateTo,
+				timeout: 3000
+			}).then(function successCallback(response) {
+				$scope.flights = response.data.data.slice(0, 20);
+			}, function errorCallback(response) {
+				$scope.from = '';
+			});
 	}
- }, true);
-
-
-$scope.findFlights = function(data) {
-  		
-
-  		$query = data;
-
-		$dateFrom = data.dateFrom; 
-		$dateTo = data.dateTo;
-
-
-  		console.log($query);
-
-  		$http({
-			method: 'GET',
-			url: 'https://api.skypicker.com/flights?v=2&locale=en&flyFrom='+ $query.from +'&to='+ $query.to +'&dateFrom='+ $dateFrom +'&dateTo=' + $dateTo,
-			timeout: 3000
-		}).then(function successCallback(response) {
-			console.log(response.data.data);
-			$scope.flights = response.data.data.slice(0, 20);
-		}, function errorCallback(response) {
-			$scope.from = '';
-		});
-}
-
 });

@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- CSS Styles -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/lib/bootstrap.min.css" rel="stylesheet">
 <link href="css/main.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600" rel="stylesheet">
-<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/lib/font-awesome.min.css" rel="stylesheet">
 
 <!-- Javascript powered by Angular -->
 <script
@@ -29,38 +29,37 @@
 <div class="zenform-holder">
 	<div class="container">
 		<h1 class="main-title">Zen Flight</h1>
-		<form class="zenform" ng-submit="findFlights(search)">
+		<form class="zenform" ng-submit="findFlights(search)" id="searchform">
 
 		<div class="row">
 			<div class="col-md-3">
-
 				<div class="form-group">
 					<label for="from">From:</label> 
-					<input type="text" list="fromPlaces" ng-model="search.from" id="from">
+					<input type="text" list="fromPlaces" ng-model="search.from" id="from" placeholder="Origin destination" autocomplete="off" list-validator="fromPlaces" required>
 					<datalist id="fromPlaces">
-				    	<option ng-repeat="n in completeFrom track by $index" value="{{n.id}}" />
+				    	<option ng-repeat="n in completeFrom track by $index" data-id="n.id" value="{{n.id}}" >{{n.value}}</option>
 					</datalist>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="to">To:</label> 
-					<input type="text" list="toPlaces" ng-model="search.to" id="to">
+					<input type="text" list="toPlaces" ng-model="search.to" id="to" placeholder="Flight destination" autocomplete="off" required>
 					<datalist id="toPlaces">
-				    	<option ng-repeat="n in completeTo track by $index" value="{{n.id}}" />
+				    	<option ng-repeat="n in completeTo track by $index" value="{{n.id}}" >{{n.value}}</option>
 					</datalist>
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="date">Flight interval from:</label> 
-					<input type="text" id="datepickerfrom" datepicker ng-model="search.dateFrom" />
+					<input type="text" id="datepickerfrom" datepicker ng-model="search.dateFrom" placeholder="From date" autocomplete="off" required />
 				</div>
 			</div>
 			<div class="col-md-3">
 				<div class="form-group">
 					<label for="date">Flight interval to:</label> 
-					<input type="text" id="datepickerto" datepicker ng-model="search.dateTo" />
+					<input type="text" id="datepickerto" datepicker ng-model="search.dateTo" placeholder="To date" autocomplete="off" required />
 				</div>
 			</div>
 		</div>
@@ -72,7 +71,6 @@
 				</button>
 			</div>
 		</div>
-		
 		</form>
 	</div>
 </div>
@@ -104,9 +102,9 @@
 </div>
 
 
-<script>
-	$('#datepickerfrom').datepicker({ dateFormat: 'dd/mm/yy' });
-	$('#datepickerto').datepicker({ dateFormat: 'dd/mm/yy' });
-</script>
+	<script>
+		$('#datepickerfrom').datepicker({ dateFormat: 'dd/mm/yy' });
+		$('#datepickerto').datepicker({ dateFormat: 'dd/mm/yy' });
+	</script>
 </body>
 </html>

@@ -11,7 +11,7 @@ gulp.task('sass', function () {
     .pipe(sass.sync().on('error', sass.logError))
     .pipe(concat('main.css'))
     .pipe(autoprefixer('last 2 version', 'safari 5', 'ie 9', 'ie 10'))
-    // .pipe(cssmin())
+    .pipe(cssmin())
     .pipe(gulp.dest('./css'));
 });
  
