@@ -21,7 +21,7 @@
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
 
-<script src="node_modules/angular/angular.js"></script>
+<script src="js/angular.min.js"></script>
 <script src="js/zen.js"></script>
 
 <body ng-app="zen" ng-controller="zenCtrl">
@@ -74,27 +74,28 @@
 		</form>
 	</div>
 </div>
-
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="flight-result-holder">
-				<div class="single-flight-result" ng-repeat="flight in flights track by $index">
-					<span class="result-time">
-						<i class="fa fa-clock-o" aria-hidden="true"></i>
-						{{flight.aTime * 1000 | date:'medium' : 'UTC'}}
-					</span>
-					<span class="result-destinations">
-						{{flight.cityFrom}} 
-							<i class="fa fa-angle-right" aria-hidden="true"></i>
- 						{{flight.cityTo}}
-					</span>
-					<span class="result-duration">
-						<i class="fa fa-plane" aria-hidden="true"></i> {{flight.fly_duration}}
-					</span>
-					<span class="result-price">
-						{{flight.price}} EUR
-					</span>
+<div class="flight-result-holder">
+	<div class="single-flight-result" ng-repeat="flight in flights track by $index">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="single-flight-result-inner">
+						<span class="result-time">
+							<i class="fa fa-clock-o" aria-hidden="true"></i>
+							{{flight.aTime * 1000 | date:'medium' : 'UTC'}}
+						</span>
+						<span class="result-destinations">
+							{{flight.cityFrom}} 
+								<i class="fa fa-angle-right" aria-hidden="true"></i>
+								{{flight.cityTo}}
+						</span>
+						<span class="result-duration">
+							<i class="fa fa-plane" aria-hidden="true"></i> {{flight.fly_duration}}
+						</span>
+						<span class="result-price">
+							{{flight.price}} EUR
+						</span>
+					</div>
 				</div>
 			</div>
 		</div>
